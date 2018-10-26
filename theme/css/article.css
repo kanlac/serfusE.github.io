@@ -82,6 +82,7 @@ H1, H2, H3, H4, H5, H6 {
     margin-top: 3rem;
     margin-bottom: 1.5rem;
     text-rendering: optimizeLegibility;
+    line-height: 1.5em;
 }
 
 H1 {
@@ -129,7 +130,7 @@ code {
 
 ul li ul, ul li ol {
     margin-left: 1.25rem;
-    margin-bottom: 0
+    margin-bottom: 
 }
 
 ul, ol, dl {
