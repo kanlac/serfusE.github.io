@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>White Blog - dev</title><link href="https://serfuse.github.io/" rel="alternate"></link><link href="https://serfuse.github.io/feeds/dev.atom.xml" rel="self"></link><id>https://serfuse.github.io/</id><updated>2014-12-03T00:00:00+08:00</updated><entry><title>Flask Web Development</title><link href="https://serfuse.github.io/flask-web-development.html" rel="alternate"></link><published>2014-12-03T00:00:00+08:00</published><updated>2014-12-03T00:00:00+08:00</updated><author><name>Dean</name></author><id>tag:serfuse.github.io,2014-12-03:/flask-web-development.html</id><summary type="html">&lt;p&gt;数据存储方面，用到的是 redis 而不是关系型数据库。redis 是一种内存（in-memory）数据库，仅支持 Unix 系统，但有非官方的 Windows 端。&lt;/p&gt;
+&lt;h2&gt;Dependences&lt;/h2&gt;
+&lt;p&gt;Flask 的主要两大依赖
+1. Werkzeug，WSGI 工具库；
+2. Jinja2，模版&lt;/p&gt;
+&lt;p&gt;数据存储方面，用到的是 redis 而不是关系型数据库。redis 是一种内存（in-memory）数据库，仅支持 Unix 系统，但有非官方的 Windows 端。&lt;/p&gt;
+&lt;h2&gt;Chapter 2. Basic Application Structure&lt;/h2&gt;
+&lt;p&gt;最简单的 Flask 应用：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# hello.py&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;数据存储方面，用到的是 redis 而不是关系型数据库。redis 是一种内存（in-memory）数据库，仅支持 Unix 系统，但有非官方的 Windows 端。&lt;/p&gt;
+&lt;h2&gt;Dependences&lt;/h2&gt;
+&lt;p&gt;Flask 的主要两大依赖
+1. Werkzeug，WSGI 工具库；
+2. Jinja2，模版&lt;/p&gt;
+&lt;p&gt;数据存储方面，用到的是 redis 而不是关系型数据库。redis 是一种内存（in-memory）数据库，仅支持 Unix 系统，但有非官方的 Windows 端。&lt;/p&gt;
+&lt;h2&gt;Chapter 2. Basic Application Structure&lt;/h2&gt;
+&lt;p&gt;最简单的 Flask 应用：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# hello.py&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+&lt;span class="c1"&gt;# create Flask instance&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+
+&lt;span class="c1"&gt;# a: route URL to function&lt;/span&gt;
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;h1&amp;gt;Hello My App&amp;lt;/h1&amp;gt;&amp;#39;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# b: dynamic route&lt;/span&gt;
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user/&amp;lt;name&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;h1&amp;gt;hello, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s1"&gt;!&amp;lt;/h1&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;
+
+&lt;span class="c1"&gt;# c: start server&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;目录结构：
+- Project Directory
+    - templates -&gt; Jinja2 files
+    - static -&gt; images, JS, CSS&lt;/p&gt;
+&lt;h3&gt;Routes and View Functions&lt;/h3&gt;
+&lt;p&gt;客户端向服务器发送一个请求，Flask app 的实例接受这个请求，对于这个应用实例，它需要知道对于每一条 URL 请求执行什么操作，所以它有一套 URL 对应到 Python 函数的匹配规则。这种对 URL 和函数之间的联系的处理就叫 &lt;strong&gt;route&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;最简单的定义一个 route 的方式是用 &lt;code&gt;Flask&lt;/code&gt; 实例提供的装饰器 &lt;code&gt;route&lt;/code&gt; 来修饰函数。如注释 &lt;code&gt;a&lt;/code&gt;，这样就把 &lt;code&gt;index()&lt;/code&gt; 函数注册为应用根目录下的 handler。比如域名是 &lt;em&gt;www.abc.com&lt;/em&gt;，则访问 &lt;em&gt;http://www.abc.com&lt;/em&gt; 时就会触发这个 &lt;code&gt;index()&lt;/code&gt; 函数，客户端收到的 response 即是其返回值。&lt;/p&gt;
+&lt;p&gt;但是这样将响应（HTML 字符串）嵌入到 Python 代码里面非常不利于维护，第三章会介绍更合适的生成响应的方式。&lt;/p&gt;
+&lt;p&gt;类似 &lt;code&gt;index()&lt;/code&gt; 这样的函数被称为视图函数（&lt;strong&gt;view function&lt;/strong&gt;）。&lt;/p&gt;
+&lt;p&gt;使用动态元素（&lt;strong&gt;dynamic component&lt;/strong&gt;）可以动态地 route URL（注释 &lt;code&gt;b&lt;/code&gt;）。Flask 支持的 route 类型有 &lt;code&gt;string&lt;/code&gt; &lt;code&gt;int&lt;/code&gt; &lt;code&gt;float&lt;/code&gt; 和 &lt;code&gt;path&lt;/code&gt;。&lt;code&gt;path&lt;/code&gt; 与 &lt;code&gt;string&lt;/code&gt; 的区别是前者不会把 &lt;code&gt;/&lt;/code&gt; 作为分隔符。
+示例：&lt;code&gt;/user/&amp;lt;int:id&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;运行&lt;/h3&gt;
+&lt;p&gt;用 &lt;code&gt;Flask&lt;/code&gt; 实例的 &lt;code&gt;app()&lt;/code&gt; 方法来启动服务器（注释 &lt;code&gt;c&lt;/code&gt;）。然后执行 Python 程序。
+&lt;img alt="screenshot" src="/images/flask-web-development/1.jpeg"&gt; 
+&lt;img alt="screenshot" src="/images/flask-web-development/2.jpeg"&gt;&lt;/p&gt;
+&lt;h3&gt;请求、响应周期&lt;/h3&gt;
+&lt;h4&gt;a. (Application and Request) Contexts&lt;/h4&gt;
+&lt;p&gt;Flask 有两种场景（&lt;strong&gt;context&lt;/strong&gt;），四个全局场景变量（&lt;strong&gt;context variables&lt;/strong&gt;）：
+&lt;img alt="screenshot" src="/images/flask-web-development/3.jpeg"&gt;&lt;/p&gt;
+&lt;p&gt;在派发一个请求前，Flask 会激活（activates/pushes）两种 contexts，当请求处理完毕时移除。&lt;/p&gt;
+&lt;p&gt;如上表所示，当 application context 被激活，变量 &lt;code&gt;current_app&lt;/code&gt; 和 &lt;code&gt;g&lt;/code&gt; 会在线程中可用；request context 激活时同理。如果 context 没有被激活时就访问到变量，会生成错误。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;hello&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="c1"&gt;# Flask instance&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;current_app&lt;/span&gt; &lt;span class="c1"&gt;# context variable&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;current_app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; 
+&lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="ne"&gt;RuntimeError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;working&lt;/span&gt; &lt;span class="n"&gt;outside&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;app_ctx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app_context&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c1"&gt;# obtain application context&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;app_ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;current_app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; 
+&lt;span class="s1"&gt;&amp;#39;hello&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;app_ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;b. Request Dispatching&lt;/h4&gt;
+&lt;p&gt;用 &lt;code&gt;Flask&lt;/code&gt; 的 &lt;code&gt;url_map&lt;/code&gt; 属性可以查看实例中已有的 route map。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;python3&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;hello&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;url_map&lt;/span&gt; 
+&lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Rule&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HEAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;OPTIONS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;GET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+ &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Rule&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/static/&amp;lt;filename&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HEAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;OPTIONS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;GET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;static&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+ &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Rule&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/user/&amp;lt;name&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HEAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;OPTIONS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;GET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注意到这里第二个 rule 不是我们用 &lt;code&gt;app.route&lt;/code&gt; 装饰器定义的，这是 Flask 特供的用于访问静态资源的 route，关于静态文件会在第三章提到。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(HEAD, OPTIONS, GET)&lt;/code&gt; 代表的是请求方法（&lt;strong&gt;request method&lt;/strong&gt;），Flask 为 route 附上请求方法，这样能实现对于访问同一个 URL 的不同请求，调用不同的 view function。关于区别不同的请求方法会在第四章提及。&lt;/p&gt;
+&lt;h4&gt;c. Request Hooks&lt;/h4&gt;
+&lt;p&gt;钩子函数，定义请求派发的前后执行的函数，类似 Java Web 中的过滤器，后面还会提及。&lt;/p&gt;
+&lt;h4&gt;d. Response&lt;/h4&gt;
+&lt;p&gt;上面的 view function 中我们返回的响应是简单的 HTML 字符串，但我们还可以返回一个 &lt;code&gt;Response&lt;/code&gt; 对象。可以用 &lt;code&gt;make_response()&lt;/code&gt; 这个静态方法生成，用它还可以进行 cookie 设置等操作。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;make_response&lt;/span&gt; 
+
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;make_response&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt;h1&amp;gt;This document carries a cookie!&amp;lt;/h1&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+    &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_cookie&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;answer&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;42&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果要进行重定向，常用 &lt;code&gt;redirect(another_url_path)&lt;/code&gt;，它也返回一个 &lt;code&gt;Response&lt;/code&gt; 对象。&lt;/p&gt;
+&lt;p&gt;如果要进行错误处理，&lt;code&gt;abort(404)&lt;/code&gt; 能返回 404 状态码。不过要注意的是它不会把控制交还给调用它的函数，而是交还 web 服务器抛出异常。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;abort&lt;/span&gt; 
+
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user/&amp;lt;id&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;abort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;404&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;h1&amp;gt;Hello, &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s1"&gt;&amp;lt;/h1&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Flask 扩展&lt;/h3&gt;
+&lt;p&gt;如果我们要对 Flask 服务器进行配置，可以在 &lt;code&gt;app.run()&lt;/code&gt; 中添加参数，但更方便的方式是通过命令行传参。&lt;/p&gt;
+&lt;p&gt;先安装 &lt;code&gt;flask-script&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(venv) $ pip install flask-script
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;用 &lt;code&gt;Manager&lt;/code&gt; 类接管 Flask app：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask.ext.script&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Manager&lt;/span&gt; 
+&lt;span class="n"&gt;manager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Manager&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# ...&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;manager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这时候再运行程序，就会提示提供参数了：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(env) $ python3 hello.py
+usage: hello.py [-?] {shell,runserver} ...
+
+positional arguments:
+  {shell,runserver}
+    shell            Runs a Python shell inside Flask application context.
+    runserver        Runs the Flask development server i.e. app.run()
+
+optional arguments:
+  -?, --help         show this help message and exit
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装提示，比如要启动服务器：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(env) $ python3 hello.py runserver
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配置 host（a.b.c.d:5000）使服务器在局域网络中可访问：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(env) $ python hello.py runserver --host 0.0.0.0 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Chapter 3. Templates&lt;/h2&gt;
+&lt;p&gt;从第二章了解到，view function 的任务是针对请求生成响应，这对简单的请求没问题，但如果稍微复杂一点就会发现矛盾。比如用户发起一个注册请求，view function 需要 1) 访问数据库创建新记录 2) 生成响应发送给客户端。这样就把业务逻辑（&lt;strong&gt;business logic&lt;/strong&gt;）和展示逻辑（&lt;strong&gt;presentation logic&lt;/strong&gt;）混淆在了一起，导致代码难以理解且不利于维护。&lt;/p&gt;
+&lt;p&gt;把展示层逻辑转移到模版（&lt;strong&gt;template&lt;/strong&gt;）即可以提高可维护性。模版是包含响应文本的 HTML 文件，数据由占位符变量表示。而把变量替换为真实的数据的过程就叫做渲染（&lt;strong&gt;rendering&lt;/strong&gt;）。&lt;/p&gt;
+&lt;h3&gt;Jinja2 模版渲染引擎&lt;/h3&gt;
+&lt;p&gt;Jinja2 模版语法和变量的使用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;render_template&lt;/span&gt; &lt;span class="c1"&gt;# import rendering method&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;render_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;index.html&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# refer to templates/index.html&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user/&amp;lt;name&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;render_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user.html&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# dynamic component&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在模版文件中使用构造器 &lt;code&gt;{{ variable }}&lt;/code&gt; 来获得变量：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;lt;!-- templates/user.html --&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Hello, {{ name }}!&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;Jinja2 variable filters&lt;/h4&gt;
+&lt;p&gt;Jinja2 提供了一些实用的变量过滤器，查阅&lt;a href="http://jinja.pocoo.org/docs/2.10/templates/"&gt;官方文档&lt;/a&gt;获取更多用法。
+&lt;img alt="screenshot" src="/images/flask-web-development/4.jpeg"&gt;
+例如，Jinja2 默认会对变量进行转义，如果需要传递 HTML 代码，用 &lt;code&gt;safe&lt;/code&gt; 来避免转义：&lt;code&gt;{{ variable_name|safe }}&lt;/code&gt;。但要注意，永远不要对不可信变量使用 &lt;code&gt;safe&lt;/code&gt; 过滤（比如用户提交的表单）。&lt;/p&gt;
+&lt;h4&gt;Control Structures&lt;/h4&gt;
+&lt;p&gt;条件判断：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;user&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;
+&lt;span class="x"&gt;    Hello, &lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;user&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt;! &lt;/span&gt;
+&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;    Hello, Stranger! &lt;/span&gt;
+&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;endif&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;循环语句：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;comment&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nv"&gt;comments&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;    &lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;comment&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;endfor&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;宏（macro），类似 Python 中的函数：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{% macro render_comment(comment) %} 
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ comment }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
+{% endmacro %}
+
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;ul&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    {% for comment in comments %} 
+        {{ render_comment(comment) }} 
+    {% endfor %} 
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;ul&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;为了提高 macros 的可用性，可以放到一个单独的 html 文件中，在模版通过 &lt;code&gt;import&lt;/code&gt; 导入：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;macros.html&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;macros&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; 
+&lt;span class="p"&gt;{{&lt;/span&gt; &lt;span class="n"&gt;macros&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;render_comment&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;comment&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;}}&lt;/span&gt; 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;重复使用的模版代码也可以单独拿出来，在需要的时候导入：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{% include &amp;#39;common.html&amp;#39; %}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;更进一步，可以用模版继承来完善代码结构。首先创建一个基本模版：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    {% block head %}
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{% block title %}{% endblock %} - My Application&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    {% endblock %} 
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    {% block body %}
+    {% endblock %} 
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;实现继承的模版：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{% extends &amp;quot;base.html&amp;quot; %} 
+{% block title %}Index{% endblock %} 
+{% block head %}
+    &lt;span class="c"&gt;&amp;lt;!-- 如果被继承的 block 中包换元素，用 super() 获取 --&amp;gt;&lt;/span&gt;
+    {{ super() }} 
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;style&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;style&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
+{% endblock %} 
+{% block body %} 
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Hello, World!&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
+{% endblock %}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;由于修饰笔记耗费太多的时间，为了加快进度，从这里开始往后改变以笔记为首的学习方式，多做引用和直接在原书上批注（这样的话可能以后随时按需拓展）&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt;Twitter Bootstrap Integration with Flask Bootstrap&lt;/h3&gt;
+&lt;p&gt;Bootstrap 是 Twitter 的开源框架，它提供创建网页的用户界面接口，兼容性好。简单的说就是一个 CSS 和 JS 库。&lt;/p&gt;
+&lt;p&gt;使用 Bootstrap 有多种方式，可以将编译过的 CSS 和 JS 文件下载下来放到项目中、用包管理器安装、或者用 Bootstrap 官方提供的免费 CDN（通过 HTML &lt;code&gt;&amp;lt;link&amp;gt;&lt;/code&gt;）。在这里，我们使用第二种方式。&lt;/p&gt;
+&lt;p&gt;如何加载 Bootstrap：
+1. 通过虚拟环境安装包&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(env) $ pip install flask-bootstrap
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;在 Python 程序中导入 &lt;code&gt;Bootstrap&lt;/code&gt; 模块&lt;/li&gt;
+&lt;li&gt;用 Flask 应用作为构造器参数实例化 &lt;code&gt;Bootstrap&lt;/code&gt;（变量名称不重要）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask_bootstrap&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Bootstrap&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Bootstrap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;通过 Jinja2 导入&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;bootstrap/base.html&amp;quot;&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Bootstrap 本身是在 base template 的 &lt;code&gt;styles&lt;/code&gt; 和 &lt;code&gt;scripts&lt;/code&gt; block 里面定义的，所以如果要继承这两个 block，一定要加上 &lt;code&gt;{{ super() }}&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;可供使用的 blocks 参考：&lt;a href="https://pythonhosted.org/Flask-Bootstrap/basic-usage.html"&gt;https://pythonhosted.org/Flask-Bootstrap/basic-usage.html&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;链接处理&lt;/h3&gt;
+&lt;p&gt;Flask 提供了一个 &lt;code&gt;url_for()&lt;/code&gt; 方法。几种用法举例：
+1. 为 URL 填入动态元素
+&lt;code&gt;url_for('user', name='john')&lt;/code&gt; -&gt; &lt;em&gt;/user/john.&lt;/em&gt;
+2. 设置请求参数字符串
+&lt;code&gt;url_for('index', page=2)&lt;/code&gt; -&gt; &lt;em&gt;/?page=2&lt;/em&gt;
+3. 指定为外部链接
+&lt;code&gt;url_for('index', _external=True)&lt;/code&gt; -&gt; &lt;em&gt;http://localhost:5000&lt;/em&gt;
+4. 链接到 static 目录下的 CSS 文件
+&lt;code&gt;url_for('static', filename='css/styles.css')&lt;/code&gt; -&gt; &lt;em&gt;/static/css/styles.css&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;下面是用 Jinja2 导入一些头部文件的示例：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;block&lt;/span&gt; &lt;span class="nv"&gt;head&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;
+&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt; &amp;lt;!—- 注意要继承 Bootstrap 中的 head -—&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;&amp;lt;link rel=&amp;quot;shortcut icon&amp;quot; href=&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;url_for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;static&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;favicon.ico&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt;&amp;quot; type=&amp;quot;image/x-icon&amp;quot;&amp;gt; &lt;/span&gt;
+&lt;span class="x"&gt;&amp;lt;link rel=&amp;quot;icon&amp;quot; href=&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;url_for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;static&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;favicon.ico&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt;&amp;quot; type=&amp;quot;image/x-icon&amp;quot;&amp;gt; &lt;/span&gt;
+&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;endblock&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;用 Flask-Moment 实现时区的本地化&lt;/h3&gt;
+&lt;p&gt;为了统一标准，服务器时间都使用 UTC 标准时间，时区现实的本地化在客户端浏览器完成。moment.js 是一个开源的客户端的 JS 库，Flask 的拓展将它和 Jinja2 模版进行了整合，这就是 Flask-Moment。&lt;/p&gt;
+&lt;p&gt;安装：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(env) $ pip install flask-moment
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;初始化：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask.ext.moment&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Moment&lt;/span&gt; 
+&lt;span class="n"&gt;moment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Moment&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;除了 moment.js，Flask-Moment 还依赖于 jquery.js，不过 Bootstrap 已经包含了对前者，所以我们只需要手动导入 moment.js。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Import module&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask_moment&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;Initialization&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;moment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Moment&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+&lt;span class="c1"&gt;# `app` refers to Flask instance&lt;/span&gt;
+&lt;span class="c1"&gt;# again, the name in the left is irrelevant.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;Pass time object to template&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;render_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;index.html&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;current_time&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;datetime&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;utcnow&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;Present local date and time in Jinja2&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;p&amp;gt;&lt;/span&gt;The local date and time is &lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;moment&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;current_time&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;.format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;LLL&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;.&lt;span class="nt"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;p&amp;gt;&lt;/span&gt;That was &lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;moment&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;current_time&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;.fromNow&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;refresh&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kp"&gt;True&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;.&lt;span class="nt"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;{# &lt;/span&gt;
+&lt;span class="c"&gt;The local date and time is September 17, 2018 8:29 PM.&lt;/span&gt;
+&lt;span class="c"&gt;That was a few seconds ago. &lt;/span&gt;
+&lt;span class="c"&gt;*}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Chapter 4. Web Forms&lt;/h2&gt;
+&lt;p&gt;这一章讨论模版与用户的交互。&lt;/p&gt;
+&lt;p&gt;通过 POST 提交的表单用 &lt;code&gt;request.form&lt;/code&gt; 获取&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;WTForms&lt;/strong&gt; 是 Python web 开发中一个灵活的表单验证即渲染库。它与框架无关，可以搭配任何一种 web 框架和模版引擎使用。&lt;/p&gt;
+&lt;p&gt;安装：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(env) $ pip install flask-wtf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;CSRF 保护&lt;/h3&gt;
+&lt;p&gt;跨站请求伪造（cross-site request forgery, CSRF）是一种恶意的攻击，盗用经过验证的用户身份执行未经授权的命令，如发送邮件、发消息、盗取账号、转账等隐私风险。&lt;/p&gt;
+&lt;p&gt;什么情况下会发生这种情况呢？比如你在一家安全措施薄弱的银行网站进行了登录操作，然后打开了另一个不安全网站，这个网站就可以利用你的 cookie 中的登录信息，伪造一个由浏览器发出的转账请求。所以 CSRF 利用到的漏洞在于 web 的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于某个用户的浏览器，但却无法保证该请求是用户批准发送的&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;要实现 CSRF 保护，Flask-WTF 需要应用配置一个密匙。&lt;/p&gt;
+&lt;h3&gt;Form Classes&lt;/h3&gt;
+&lt;p&gt;当使用 Flask-WTF 时，每一个表单都由 &lt;code&gt;Form&lt;/code&gt; 的一个子类表示，这个类定义了表单中的元素，每一个都用一个对象表示。可以为每个单独的对象附上一或多个校验器（validator）来确保用户提交的有效内容。&lt;/p&gt;
+&lt;p&gt;像这样定义一个表单类：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask.ext.wtf&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Form&lt;/span&gt; 
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wtforms&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;StringField&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SubmitField&lt;/span&gt; 
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wtforms.validators&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Required&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;NameForm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Form&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;StringField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;What is your name?&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;validators&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Required&lt;/span&gt;&lt;span class="p"&gt;()])&lt;/span&gt; 
+    &lt;span class="n"&gt;submit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SubmitField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Submit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;传入构造器的参数，即 &lt;code&gt;Form&lt;/code&gt; 基类，是属于 Flask-WTF 扩展下的；而 HTML field 和 validator 是在 WTForms 包中定义的。&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;a href="http://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html"&gt;http://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html&lt;/a&gt;&amp;#160;&lt;a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content></entry><entry><title>设计模式课程笔记</title><link href="https://serfuse.github.io/she-ji-mo-shi-ke-cheng-bi-ji.html" rel="alternate"></link><published>2014-06-03T00:00:00+08:00</published><updated>2014-06-03T00:00:00+08:00</updated><author><name>Dean</name></author><id>tag:serfuse.github.io,2014-06-03:/she-ji-mo-shi-ke-cheng-bi-ji.html</id><summary type="html">&lt;h2&gt;七大设计原则&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Single Responsibility Principle&lt;/li&gt;
+&lt;li&gt;Open-Closed Principle - 对扩展开放，对修改关闭&lt;/li&gt;
+&lt;li&gt;Liskov Substitution Principle - 任何基类可以出现的地方，子类一定可以出现
+当添加新的子类时，只添加不覆写&lt;/li&gt;
+&lt;li&gt;Law of Demeter - 最少知道原则&lt;/li&gt;
+&lt;li&gt;Interface Segregation Principle&lt;/li&gt;
+&lt;li&gt;Dependence Inversion Principle - 高层代码不依赖于底层实现&lt;/li&gt;
+&lt;li&gt;Composite Reuse Principle - 合成复用原则，多用关联，少用继承&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;“Sol(l)id Core”&lt;/p&gt;
+&lt;h2&gt;工厂模式（Factory Pattern）&lt;/h2&gt;
+&lt;h3&gt;一、简单工厂模式&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*** Product Interface ***/&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;AutoInsurance&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;getInsurInfo&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="cm"&gt;/*** Product Implementations …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h2&gt;七大设计原则&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Single Responsibility Principle&lt;/li&gt;
+&lt;li&gt;Open-Closed Principle - 对扩展开放，对修改关闭&lt;/li&gt;
+&lt;li&gt;Liskov Substitution Principle - 任何基类可以出现的地方，子类一定可以出现
+当添加新的子类时，只添加不覆写&lt;/li&gt;
+&lt;li&gt;Law of Demeter - 最少知道原则&lt;/li&gt;
+&lt;li&gt;Interface Segregation Principle&lt;/li&gt;
+&lt;li&gt;Dependence Inversion Principle - 高层代码不依赖于底层实现&lt;/li&gt;
+&lt;li&gt;Composite Reuse Principle - 合成复用原则，多用关联，少用继承&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;“Sol(l)id Core”&lt;/p&gt;
+&lt;h2&gt;工厂模式（Factory Pattern）&lt;/h2&gt;
+&lt;h3&gt;一、简单工厂模式&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*** Product Interface ***/&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;AutoInsurance&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;getInsurInfo&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="cm"&gt;/*** Product Implementations ***/&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;BodyInjury&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;getInsurInfo&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;get body injury insurance info..&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Collision&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;getInsurInfo&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;get collision insurance info..&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="cm"&gt;/*** Simple Facotry ***/&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PolicyProducer&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="nf"&gt;getPolicyObj&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="n"&gt;ai&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;BodyInjury&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;ai&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;BodyInjury&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;ai&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Collision&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ai&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="cm"&gt;/*** Client ***/&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Client&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;BodyInjury&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="n"&gt;ai&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PolicyProducer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getPolicyObj&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;ai&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getInsurInfo&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;要添加新的对象类型，需要修改工厂类，不需要修改客户端。&lt;/p&gt;
+&lt;p&gt;弊端：不符合开闭原则&lt;/p&gt;
+&lt;h3&gt;二、工厂方法模式&lt;/h3&gt;
+&lt;p&gt;工厂类作为接口。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*** Factory ***/&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;PolicyProducer&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="nf"&gt;getPolicyObj&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="cm"&gt;/*** Factory Implementations ***/&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;BodyPolicy&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;PolicyProducer&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="nf"&gt;getPolicyObj&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;BodyInjury&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CollisionPolicy&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;PolicyProducer&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="nf"&gt;getPolicyObj&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Collision&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="cm"&gt;/*** AutoInsurance and its implementations... (refer to Simple-Factory). ***/&lt;/span&gt;
+
+&lt;span class="cm"&gt;/*** Client ***/&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Client&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;BodyInjury&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;PolicyProducer&lt;/span&gt; &lt;span class="n"&gt;policyProducer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;BodyInjury&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;policyProducer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;BodyPolicy&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;policyProducer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Collision&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="n"&gt;AutoInsurance&lt;/span&gt; &lt;span class="n"&gt;ai&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;policyProducer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getPolicyObj&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;ai&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getInsurInfo&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;工厂方法模式是三个工厂模式中对开闭原则支持最好的。要添加新的对象类型，不需要修改工厂类，只要创建新的工厂类的实现，因此它支持开闭原则；但是需要在客户端添加代码。&lt;/p&gt;
+&lt;h3&gt;三、抽象工厂模式&lt;/h3&gt;
+&lt;p&gt;当生产模式存在类似交叠的关系时，就有一个产品族+工厂族的问题，此时就应该使用抽象工厂模式。&lt;/p&gt;
+&lt;p&gt;为了比较好地理解抽象工厂，这里讲述两个例子，它们所用到的也是不同的思路。&lt;/p&gt;
+&lt;p&gt;样例一的产品族为：高档别墅，中档别墅，高档公寓，中档公寓；
+样例二的产品族为：颜色产品（包括蓝色，黄色等），图形产品（包括圆形，矩形等）。&lt;/p&gt;
+&lt;p&gt;做后面的分析时，请结合具体的实现代码理解：样例一&lt;a href="/design-pattern-course/example-I.java"&gt;代码&lt;/a&gt;；样例二参考 &lt;a href="https://www.tutorialspoint.com/design_pattern/abstract_factory_pattern.htm"&gt;Tutorialspoint&lt;/a&gt; 或菜鸟教程。&lt;/p&gt;
+&lt;p&gt;首先提取出产品族中的属性。对于样例一，首先分析产品结构，可以提取出两个属性：
+- 类型（type）
+    - 别墅（house）
+    - 公寓（condo）
+- 级别（class）
+    - 高档（super）
+    - 中档（medium）&lt;/p&gt;
+&lt;p&gt;对于样例二，同样可以提取出属性：
+- 颜色（color）
+    - 蓝色（blue）
+    - 黄色（yellow）
+- 形状（shape）
+    - 圆形（circle）
+    - 矩形（rectangle）&lt;/p&gt;
+&lt;p&gt;但两个样例的区别在于，样例一的产品是属性嵌合的（一个产品必须同时具备两个属性），而样例二是属性独立的（要么是颜色产品，要么是形状产品）。因此，针对两种不同的产品模式，就有不同的设计思路。&lt;/p&gt;
+&lt;p&gt;为了方便，我们把前者叫做&lt;strong&gt;组合属性&lt;/strong&gt;产品，后者叫做&lt;strong&gt;单一属性&lt;/strong&gt;产品。&lt;/p&gt;
+&lt;p&gt;确定产品的属性间关系后，就可以开始为产品建模了。&lt;/p&gt;
+&lt;p&gt;针对组合属性产品，我们可以更进一步，把样例一中的\&amp;lt;类型&gt;看作&lt;strong&gt;类别属性&lt;/strong&gt;，\&amp;lt;级别&gt;看作&lt;strong&gt;修饰属性&lt;/strong&gt;，之所以要这样做，是为了实现两者在逻辑上的分离。&lt;strong&gt;定义产品接口时将基于类别属性，而工厂层将基于修饰属性&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;再举一个组合属性产品的例子：男（女）鞋、男（女）上衣、男（女）下装。哪个应该是类别属性？明显的，\&amp;lt;男&gt;\&amp;lt;女&gt;本身不能是产品，\&amp;lt;鞋&gt;\&amp;lt;上衣&gt;\&amp;lt;下装&gt;才是，因此前者是修饰属性，后者是类别属性。&lt;/p&gt;
+&lt;p&gt;接下来就可以得出产品族和工厂族分别为：
+- 产品族
+    - 别墅建筑（House）
+    - 公寓建筑（Condo）
+- 工厂族
+    - 高档建筑工厂（superBuildingFactory）
+    - 中档建筑工厂（mediumBuildingFactory）&lt;/p&gt;
+&lt;p&gt;相对应的，对于属于单一属性产品的样例二则应该是：
+- 产品族
+    - Rectangle \&amp;lt;Shape\\&gt;
+    - Circle \&amp;lt;Shape\\&gt;
+    - Blue \&amp;lt;Color\\&gt;
+    - Yellow \&amp;lt;Color\\&gt;
+- 工厂族
+    - 图形工厂（ShapeFactory）
+    - 颜色工厂（ColorFactory）&lt;/p&gt;
+&lt;p&gt;从上面可以看出，两者的产品类实现过程也是不一样的。同样是四个产品，样例一有两个接口类（&lt;code&gt;House&lt;/code&gt; &lt;code&gt;Condo&lt;/code&gt;），两个实现类；样例二有两个接口类，四个实现类。&lt;/p&gt;
+&lt;p&gt;对于组合属性产品，它的两个属性可以在逻辑上分离。在前面的步骤中，样例一只是以\&amp;lt;建筑类型&gt;这个属性来定义接口，另一个属性——\&amp;lt;建筑等级&gt;——被放到工厂层去了，也就是修饰属性决定工厂层实现。&lt;/p&gt;
+&lt;p&gt;两者在抽象工厂类的定义上也是有差异的。乍看上去都是有两个返回产品对象的方法，但样例一返回的是 &lt;code&gt;House&lt;/code&gt; 和 &lt;code&gt;Condo&lt;/code&gt; 对象，样例二返回的是 &lt;code&gt;Shape&lt;/code&gt; 和 &lt;code&gt;Color&lt;/code&gt; 对象。
+&lt;img alt="发现差异了吗？" src="/images/design-pattern-course/1.png"&gt;&lt;/p&gt;
+&lt;p&gt;最后是抽象工厂的实现。对于组合属性产品，工厂实现类基于修饰属性下的取值多少（两种房屋等级）；对于单一属性产品，工厂实现类基于产品族的属性本身（颜色和形状）。&lt;/p&gt;
+&lt;p&gt;有些抽象工厂的实现中，还有一层创建具体工厂的逻辑（&lt;code&gt;FactoryProducer&lt;/code&gt;），在样例一的代码中通过为抽象工厂添加静态函数 &lt;code&gt;getBuildingFactory()&lt;/code&gt; 省去了。&lt;/p&gt;
+&lt;h4&gt;抽象工厂与开闭原则&lt;/h4&gt;
+&lt;p&gt;抽象工厂产品族的扩展可以分为两种，一种是&lt;strong&gt;产品属性本身的扩展&lt;/strong&gt;，如在 Shape 和 Color 外增加一个 Opacity，另一种是&lt;strong&gt;属性下的值的扩展&lt;/strong&gt;，如在\&amp;lt;\&amp;lt;&lt;code&gt;House&lt;/code&gt;&gt;&gt;和\&amp;lt;\&amp;lt;&lt;code&gt;Condo&lt;/code&gt;&gt;&gt;外增加一种房屋类型。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="desc" src="/images/design-pattern-course/2.png"&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;《软件设计模式与体系结构》中考虑扩展性时，采取的是「工厂层」和「产品层」的视角去分析，但考虑到这里组合属性和单一属性不同样例的区别，我不采用书中的分析方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5&gt;分析组合属性产品族的扩展性&lt;/h5&gt;
+&lt;p&gt;对于&lt;strong&gt;产品属性本身的扩展&lt;/strong&gt;，假设我们在样例一的\&amp;lt;房屋类型&gt;、\&amp;lt;房屋等级&gt;之外，再添加一个组合属性\&amp;lt;房屋位置&gt;（取值有\&amp;lt;\&amp;lt;&lt;code&gt;Urban&lt;/code&gt;&gt;&gt;和\&amp;lt;\&amp;lt;&lt;code&gt;Suburb&lt;/code&gt;&gt;&gt;）。由于组合属性样例采用了把原有两类属性在逻辑上分离的方式，所以现在新加入的第三组属性，要么和类别属性（\&amp;lt;房屋类型&gt;）一起放到产品层，要么和修饰属性（\&amp;lt;房屋等级&gt;）一起放入工厂层。实际上，稍微思考一些就发现，两种做法都是不贴合实际的。因此，这种情况下是&lt;strong&gt;不符合开闭原则&lt;/strong&gt;的。&lt;/p&gt;
+&lt;p&gt;对于&lt;strong&gt;属性下的值的扩展&lt;/strong&gt;，假设在\&amp;lt;房屋等级&gt;里添加一个取值\&amp;lt;\&amp;lt;&lt;code&gt;Basic&lt;/code&gt;&gt;&gt;，那么我们要做的：a) 添加产品层实现 &lt;code&gt;BasicHouse&lt;/code&gt; &lt;code&gt;BasicCondo&lt;/code&gt;；b) 添加工厂层实现 &lt;code&gt;BasicBuildingFactory&lt;/code&gt;。可见，这种情况下是&lt;strong&gt;符合开闭原则&lt;/strong&gt;的。&lt;/p&gt;
+&lt;h5&gt;分析单一属性产品族的扩展性&lt;/h5&gt;
+&lt;p&gt;对于&lt;strong&gt;产品属性本身的扩展&lt;/strong&gt;，假设在样例二的\&amp;lt;颜色&gt;\&amp;lt;形状&gt;之外，再添加一个单一属性\&amp;lt;透明度&gt;（取值有\&amp;lt;\&amp;lt;&lt;code&gt;translucence&lt;/code&gt;&gt;&gt;\&amp;lt;\&amp;lt;&lt;code&gt;opacite&lt;/code&gt;&gt;&gt;）。则我们必须要在抽象工厂中添加方法 &lt;code&gt;getOpacity&lt;/code&gt;，因此这种情况下是&lt;strong&gt;不符合开闭原则&lt;/strong&gt;的。&lt;/p&gt;
+&lt;p&gt;对于&lt;strong&gt;属性下的值的扩展&lt;/strong&gt;，假设在\&amp;lt;颜色&gt;之下添加一个取值\&amp;lt;\&amp;lt;&lt;code&gt;Red&lt;/code&gt;&gt;&gt;，那么我们只需添加一个 &lt;code&gt;Color&lt;/code&gt; 的实现类 &lt;code&gt;Red&lt;/code&gt;，只要工厂类实现使用了 Java 映射，就不需要做客户端以外的更改了。因此，这种情况下是&lt;strong&gt;符合开闭原则&lt;/strong&gt;的。&lt;/p&gt;
+&lt;p&gt;由上，我们证明了&lt;strong&gt;不论产品族是单一属性还是组合属性，抽象工厂都是对产品属性本身的扩展关闭，对属性下的值的扩展开放的&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2&gt;单例模式（Singleton Pattern）&lt;/h2&gt;
+&lt;p&gt;可以分为三类：
+1. 构造器私有，每次从外部获取实例时重新实例化；
+2. 构造器私有，仅在第一次初始化；
+3. 构造器公有，以 HashMap 存储实例，实现可继承性。&lt;/p&gt;
+&lt;p&gt;前两种较常用，它们都不允许在外部实例化，因而也不能被继承。唯一实例对象的初始化和获取函数（&lt;code&gt;getInstance()&lt;/code&gt;）都是静态的。&lt;/p&gt;</content></entry><entry><title>Neo4j 图数据库与 Java 对象映射</title><link href="https://serfuse.github.io/neo4j-tu-shu-ju-ku-yu-java-dui-xiang-ying-she.html" rel="alternate"></link><published>2011-12-03T00:00:00+08:00</published><updated>2011-12-03T00:00:00+08:00</updated><author><name>Dean</name></author><id>tag:serfuse.github.io,2011-12-03:/neo4j-tu-shu-ju-ku-yu-java-dui-xiang-ying-she.html</id><summary type="html">&lt;h2&gt;Graph DB v.s. Relational DB&lt;/h2&gt;
+&lt;p&gt;传统的关系型数据库（Relational Database）存储的形式是表格，不论是数据的属性还是实体间的关系，都是一行行地存在固定的表格中的，这样不仅要花时间构建符合需求的数据模型，如果需要对实体属性作出调整也是非常麻烦。&lt;/p&gt;
+&lt;p&gt;在图数据库中，这些弊端就不复存在了，因为它直接利用我们构造模型草图时会用的结点-关系连接来作为数据的存储结构，不用再去处理主外键的问题。&lt;/p&gt;
+&lt;h2&gt;学习图数据库&lt;/h2&gt;
+&lt;p&gt;Neo4j 是主流的图数据库，除了详尽的教程和文档支持外，&lt;a href="neo4j.com"&gt;官网&lt;/a&gt;还提供了不少教学资源。Cypher 是 Neo4j 使用的数据库查询语言，而且比 SQL 更加易学好用。&lt;/p&gt;
+&lt;h2&gt;Introducing OGM&lt;/h2&gt;
+&lt;p&gt;Neo4j 还有一个很优越的地方在于，它提供了完整的对象映射的支持，通过一个工具库就可以把全部或者部分的数据映射到任意一种 Java 集合类型（&lt;code&gt;Iterable&lt;/code&gt; 接口）进行处理。&lt;/p&gt;
+&lt;p&gt;Neo4j 对 OGM 是这样解释的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;An OGM (Object Graph …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;h2&gt;Graph DB v.s. Relational DB&lt;/h2&gt;
+&lt;p&gt;传统的关系型数据库（Relational Database）存储的形式是表格，不论是数据的属性还是实体间的关系，都是一行行地存在固定的表格中的，这样不仅要花时间构建符合需求的数据模型，如果需要对实体属性作出调整也是非常麻烦。&lt;/p&gt;
+&lt;p&gt;在图数据库中，这些弊端就不复存在了，因为它直接利用我们构造模型草图时会用的结点-关系连接来作为数据的存储结构，不用再去处理主外键的问题。&lt;/p&gt;
+&lt;h2&gt;学习图数据库&lt;/h2&gt;
+&lt;p&gt;Neo4j 是主流的图数据库，除了详尽的教程和文档支持外，&lt;a href="neo4j.com"&gt;官网&lt;/a&gt;还提供了不少教学资源。Cypher 是 Neo4j 使用的数据库查询语言，而且比 SQL 更加易学好用。&lt;/p&gt;
+&lt;h2&gt;Introducing OGM&lt;/h2&gt;
+&lt;p&gt;Neo4j 还有一个很优越的地方在于，它提供了完整的对象映射的支持，通过一个工具库就可以把全部或者部分的数据映射到任意一种 Java 集合类型（&lt;code&gt;Iterable&lt;/code&gt; 接口）进行处理。&lt;/p&gt;
+&lt;p&gt;Neo4j 对 OGM 是这样解释的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;An OGM (Object Graph Mapper) maps nodes and relationships in the graph to objects and references in a domain model. Object instances are mapped to nodes while object references are mapped using relationships, or serialized to properties (e.g. references to a Date). JVM primitives are mapped to node or relationship properties. An OGM abstracts the database and provides a convenient way to persist your domain model in the graph and query it without using low level drivers. It also provides the flexibility to the developer to supply custom queries where the queries generated by the OGM are insufficient.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;试转译：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OGM (Object Graph Mapper) 是一种匹配器，它将图中的 nodes 和 relationships 匹配到域模型中的一个个对象。OGM 把数据库抽象出来，提供一个方便的方式去交互处理图中的对象，并能在不使用底层的数据库连接驱动的情况下进行查询。当 OGM 生成的查询不能满足需要的时候，它也具有添加自定义查询的灵活性。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Neo4j-OGM 是一个 Java 库，使用它能通过标注了的域模型（POJO 类）建立与数据库的匹配。在 OGM 的支持下，连接数据库进行更新的次数得到了最小化。&lt;/p&gt;
+&lt;p&gt;对数据库的操作简化为了对 Java 对象的操作，提交更改的过程则隐藏到了 session 之后。&lt;/p&gt;
+&lt;p&gt;而至于 session 是什么，文档中又是这样说的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The Session keeps track of changes made to entities and relationships and persists ones that have been modified on save. Once an entity is tracked by the session, reloading this entity within the scope of the same session will result in the session cache returning the previously loaded entity. However, the subgraph in the session will expand if the entity or its related entities retrieve additional relationships from the graph.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;转译如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一个 session 中存有实体和关系的变更信息，一旦一个实体被一个 session 追踪了，如果在同一个 session 的作用域中重复加载该实体，将直接从 session 缓存的这部分子图中获得。如果数据库中的图的相关实体有新增加的关系，session 子图则会扩增。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果想要从数据库获取最新的数据，可以创建一个新的 session，或者用 Session.clear() 清空。Session 的生命周期可以通过编写代码来控制，太长或者太短都不好。&lt;/p&gt;
+&lt;h2&gt;应用 OGM 的步骤&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;在构建工具（Maven 或 Graddle）中添加 ogm 依赖；&lt;/li&gt;
+&lt;li&gt;连接到数据库；&lt;/li&gt;
+&lt;li&gt;构建域模型，这是匹配数据库对象到 Java 对象的关键；&lt;/li&gt;
+&lt;li&gt;实现一个单例模式，提供创建 session 的接口；&lt;/li&gt;
+&lt;li&gt;使用 Service 结构，定义与数据库交互的接口，以及实现类。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;更多参考 Neo4j 的官方文档：https://neo4j.com/docs/ogm-manual/current/introduction/&lt;/em&gt;&lt;/p&gt;</content></entry></feed>
